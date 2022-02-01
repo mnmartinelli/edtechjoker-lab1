@@ -1,37 +1,49 @@
 import { html, css, LitElement } from 'lit';
 
+
 export class HelloWorld extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
+        display: inline-block;
         padding: 25px;
-        color: var(--hello-world-text-color, #000);
+        background: lightgrey;
+      }
+      .planet {
+        color: var(--planet-color, blue);
       }
     `;
   }
 
+  //declare and initalize variables
   static get properties() {
     return {
-      title: { type: String },
-      counter: { type: Number },
+      greeting: { type: String },
+      planet: { type: String },
     };
   }
 
+  //create object
   constructor() {
     super();
-    this.title = 'Hey there';
-    this.counter = 5;
+    this.greeting = 'Hey there,';
+    this.planet = 'World!';
   }
 
-  __increment() {
-    this.counter += 1;
-  }
 
+  //event lister for togglePlanet
   render() {
     return html`
-      <h2>${this.title} Nr. ${this.counter}!</h2>
-      <button @click=${this.__increment}>increment</button>
+      <span @click=${this.togglePlanet}
+        >${this.greeting}
+        <span class="planet">${this.planet}</span>
+      </span>
     `;
   }
+  //Event handler
+  togglePlanet() {
+    this.planet = this.planet === 'World' ? 'Mars' : 'World';
+  }
 }
+
+customElements.define('my-element', HelloWorld);
